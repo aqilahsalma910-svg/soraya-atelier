@@ -22,12 +22,12 @@
             </a>
             <ul class="nav-links">
                 <li><a href="#katalog">Katalog Utama</a></li>
-                <li><a href="#akrilik" onclick="filterProducts('akrilik')">Sewa Akrilik</a></li>
-                <li><a href="#buket" onclick="filterProducts('buket')">Buket Bunga</a></li>
-                <li><a href="#parcel" onclick="filterProducts('parcel')">Parcel</a></li>
-                <li><a href="#souvenir" onclick="filterProducts('souvenir')">Souvenir</a></li>
+                <li><a href="#katalog" onclick="filterProducts('akrilik')">Sewa Akrilik</a></li>
+                <li><a href="#katalog" onclick="filterProducts('buket')">Buket Bunga</a></li>
+                <li><a href="#katalog" onclick="filterProducts('parcel')">Parcel</a></li>
+                <li><a href="#katalog" onclick="filterProducts('souvenir')">Souvenir</a></li>
             </ul>
-            <a href="#" id="headerWaBtn" class="btn-wa-header" target="_blank">
+            <a href="https://wa.me/62895363131329?text=Halo%20Soraya%20Atelier,%20saya%20mau%20bertanya%20mengenai%20katalog%20produk..." class="btn-wa-header" target="_blank">
                 <i class="fa-brands fa-whatsapp"></i> Chat Admin
             </a>
         </div>
@@ -47,20 +47,6 @@
             <img src="logo.png" alt="Soraya Atelier Showcase">
         </div>
     </section>
-
-    <!-- PENGATURAN NOMOR WA ADMIN -->
-    <div class="container">
-        <div class="wa-config-banner">
-            <div class="wa-config-title">
-                <i class="fa-solid fa-gear"></i> Pengaturan WhatsApp Toko
-            </div>
-            <div class="wa-input-group">
-                <input type="text" id="adminWaInput" placeholder="Masukkan nomor WA (Contoh: 0895363131329)" value="0895363131329">
-                <button onclick="saveAdminNumber()">Simpan & Terapkan Nomor</button>
-            </div>
-            <span id="waStatus" class="wa-status-text"></span>
-        </div>
-    </div>
 
     <!-- KATALOG SECTION -->
     <section class="katalog-section" id="katalog">
@@ -91,7 +77,8 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        let currentPhoneNumber = "62895363131329"; 
+        // Nomor WhatsApp Dikunci Permanen
+        const currentPhoneNumber = "62895363131329"; 
 
         const productsData = [
             // AKRILIK
@@ -122,32 +109,6 @@
             { id: 19, category: 'souvenir', type: 'Beli (Min 30pcs)', title: 'Souvenir Bubble Candle Sage Green', desc: 'Lilin bubble hijau sage elegan dengan hiasan bunga kering & custom kemasan nama.', price: 'Rp 12.500 / pcs', img: 'souvenir-2.jpg' },
             { id: 20, category: 'souvenir', type: 'Beli (Min 50pcs)', title: 'Souvenir Scented Tealight Pink', desc: 'Lilin wangi mini dalam kemasan kartu ucapan "Thank You" kustom nama & tanggal.', price: 'Rp 7.500 / pcs', img: 'souvenir-3.jpg' }
         ];
-
-        function formatPhone(num) {
-            let cleaned = num.replace(/\D/g, '');
-            if (cleaned.startsWith('0')) {
-                cleaned = '62' + cleaned.substring(1);
-            }
-            return cleaned;
-        }
-
-        function saveAdminNumber() {
-            const inputVal = document.getElementById('adminWaInput').value;
-            if(!inputVal) {
-                alert('Masukkan nomor WhatsApp yang valid!');
-                return;
-            }
-            currentPhoneNumber = formatPhone(inputVal);
-            document.getElementById('waStatus').innerText = `✓ Nomor WhatsApp berhasil dihubungkan ke: +${currentPhoneNumber}`;
-            renderProducts(productsData);
-            updateHeaderWa();
-        }
-
-        function updateHeaderWa() {
-            const btn = document.getElementById('headerWaBtn');
-            const msg = encodeURIComponent("Halo Soraya Atelier, saya mau bertanya mengenai katalog produk...");
-            btn.href = `https://wa.me/${currentPhoneNumber}?text=${msg}`;
-        }
 
         function renderProducts(items) {
             const grid = document.getElementById('productGrid');
@@ -188,7 +149,6 @@
             }
         }
 
-        updateHeaderWa();
         renderProducts(productsData);
     </script>
 </body>
