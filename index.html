@@ -1,1 +1,195 @@
-const phone = "62895363131329"; // Ganti dengan nomor WhatsApp Business Soraya Atelier
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soraya Atelier - Modern & Aesthetic Event Rental</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <header>
+        <div class="navbar">
+            <a href="#" class="brand-logo">
+                <img src="logo.png" alt="Soraya Atelier Logo">
+                <div class="brand-text">
+                    <h1>SORAYA</h1>
+                    <span>ATELIER</span>
+                </div>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#katalog">Katalog Utama</a></li>
+                <li><a href="#akrilik" onclick="filterProducts('akrilik')">Sewa Akrilik</a></li>
+                <li><a href="#buket" onclick="filterProducts('buket')">Buket Bunga</a></li>
+                <li><a href="#parcel" onclick="filterProducts('parcel')">Parcel</a></li>
+                <li><a href="#souvenir" onclick="filterProducts('souvenir')">Souvenir</a></li>
+            </ul>
+            <a href="#" id="headerWaBtn" class="btn-wa-header" target="_blank">
+                <i class="fa-brands fa-whatsapp"></i> Chat Admin
+            </a>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-text">
+            <div class="badge-hero"><i class="fa-solid fa-sparkles"></i> Aesthetic Event & Gifting</div>
+            <h2>Sentuhan Soft & Luxury untuk <span>Momen Spesialmu</span></h2>
+            <p>Penyewaan Papan Akrilik Transparan, Buket Bunga Pastel, Parcel Eksklusif, dan Souvenir Custom dengan Tampilan High-Definition (HD) & Aesthetic.</p>
+            <div class="hero-buttons">
+                <a href="#katalog" class="btn-primary-glow">Eksplor Katalog <i class="fa-solid fa-arrow-right-long"></i></a>
+            </div>
+        </div>
+        <div class="hero-image-wrapper">
+            <img src="logo.png" alt="Soraya Atelier Showcase">
+        </div>
+    </section>
+
+    <!-- PENGATURAN NOMOR WA ADMIN -->
+    <div class="container">
+        <div class="wa-config-banner">
+            <div class="wa-config-title">
+                <i class="fa-solid fa-gear"></i> Pengaturan WhatsApp Toko
+            </div>
+            <div class="wa-input-group">
+                <input type="text" id="adminWaInput" placeholder="Masukkan nomor WA (Contoh: 081234567890)" value="081234567890">
+                <button onclick="saveAdminNumber()">Simpan & Terapkan Nomor</button>
+            </div>
+            <span id="waStatus" class="wa-status-text"></span>
+        </div>
+    </div>
+
+    <!-- KATALOG SECTION -->
+    <section class="katalog-section" id="katalog">
+        <div class="section-header">
+            <span class="section-subtitle">Luxury & Soft Aesthetic</span>
+            <h2 class="section-title">Katalog Produk & Penyewaan</h2>
+        </div>
+
+        <div class="category-filter">
+            <button class="filter-btn active" onclick="filterProducts('all')">Semua Koleksi</button>
+            <button class="filter-btn" onclick="filterProducts('akrilik')">Sewa Papan Akrilik</button>
+            <button class="filter-btn" onclick="filterProducts('buket')">Buket Bunga</button>
+            <button class="filter-btn" onclick="filterProducts('parcel')">Parcel & Hampers</button>
+            <button class="filter-btn" onclick="filterProducts('souvenir')">Souvenir Custom</button>
+        </div>
+
+        <div class="product-grid" id="productGrid">
+            <!-- Di-render otomatis oleh JS -->
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <h3>SORAYA ATELIER</h3>
+        <p>Your Modern & Aesthetic Event Rental Solution</p>
+        <p class="footer-copy">&copy; 2026 Soraya Atelier. All Rights Reserved.</p>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        let currentPhoneNumber = "6281234567890"; // Masukkan nomor WA default kamu
+
+        const productsData = [
+            // AKRILIK
+            { id: 1, category: 'akrilik', type: 'Sewa', title: 'Papan Akrilik Arch Maroon Orchid', desc: 'Bentuk kubah (arch) modern dengan hiasan bunga anggrek maroon mewah & pita organza pink soft.', price: 'Rp 150.000', img: 'akrilik-1.jpg' },
+            { id: 2, category: 'akrilik', type: 'Sewa', title: 'Papan Akrilik Round Pink Lily', desc: 'Akrilik bulat estetik dengan rangkaian bunga lily & anggrek warna pink cerah + pita tulle lembut.', price: 'Rp 135.000', img: 'akrilik-2.jpg' },
+            { id: 3, category: 'akrilik', type: 'Sewa', title: 'Papan Akrilik Round Botanical Floral', desc: 'Desain terakota & dedaunan alami yang hangat, sangat pas untuk event bertema rustic/outdoor.', price: 'Rp 140.000', img: 'akrilik-3.jpg' },
+            { id: 4, category: 'akrilik', type: 'Sewa', title: 'Papan Akrilik Arch White Rose Classic', desc: 'Desain minimalis modern warna putih bersih dengan mawar putih. Cocok untuk Wedding Welcome Sign.', price: 'Rp 150.000', img: 'akrilik-4.jpg' },
+            { id: 5, category: 'akrilik', type: 'Sewa', title: 'Papan Akrilik Round Dusty Pink Birthday', desc: 'Papan bulat cantik dengan mawar dusty pink & pita putih pada tripod easel.', price: 'Rp 125.000', img: 'akrilik-5.jpg' },
+            { id: 6, category: 'akrilik', type: 'Sewa', title: 'Papan Akrilik Black Gold Graduation', desc: 'Akrilik hitam mewah dengan tulisan gold emboss & bunga mawar-anggrek putih. Favorit Wisuda.', price: 'Rp 145.000', img: 'akrilik-6.jpg' },
+
+            // BUKET
+            { id: 7, category: 'buket', type: 'Beli', title: 'Buket Bunga Royal Navy & Ice Blue', desc: 'Rangkaian mawar biru muda, abu-abu & hitam eksklusif dengan wrapper warna navy-hitam.', price: 'Rp 95.000', img: 'buket-blue.jpg' },
+            { id: 8, category: 'buket', type: 'Beli', title: 'Buket Bunga Soft Pink Carnation', desc: 'Bunga carnation pink lembut dengan pembungkus transparan Korea yang mekar dan manis.', price: 'Rp 85.000', img: 'buket-pink.jpg' },
+            { id: 9, category: 'buket', type: 'Beli', title: 'Buket Cokelat Silverqueen & Cadbury', desc: 'Kombinasi cokelat Silverqueen & Cadbury melimpah dihiasi mawar merah segar & pita satin maroon.', price: 'Rp 120.000', img: 'buket-cokelat.jpg' },
+            { id: 10, category: 'buket', type: 'Beli', title: 'Buket Candy Ribbon Wrapper', desc: 'Buket snack unik bentuk permen jumbo dengan isian snack favorit dan pita cantik.', price: 'Rp 65.000', img: 'buket-candy.jpg' },
+            { id: 11, category: 'buket', type: 'Beli', title: 'Buket Tumbler & Snack Pinky', desc: 'Buket kombinasi tumbler minum estetik + snack Good Time & Chocolatos manis.', price: 'Rp 85.000', img: 'buket-tumbler.jpg' },
+
+            // PARCEL
+            { id: 12, category: 'parcel', type: 'Beli', title: 'Hampers Idul Fitri Tosca Green Series', desc: 'Keranjang hijau tosca dengan isi Astor Matcha, Pocky, Zyluc, Tehbotol & pita emas mewah.', price: 'Rp 185.000', img: 'parcel-6.jpg' },
+            { id: 13, category: 'parcel', type: 'Beli', title: 'Hampers Idul Fitri Green Natural', desc: 'Keranjang rotan estetik dengan Nextar, La Fonte, Sari Kacang Ijo, dan pita nuansa hijau.', price: 'Rp 175.000', img: 'parcel-1.jpg' },
+            { id: 14, category: 'parcel', type: 'Beli', title: 'Hampers Red Christmas & Event', desc: 'Hampers spesial kemasan merah mewah dengan Pocky, Delico, Genji Pie & Fruit Tea.', price: 'Rp 195.000', img: 'parcel-2.jpg' },
+            { id: 15, category: 'parcel', type: 'Beli', title: 'Parcel Bag Clear Red Ribbon', desc: 'Tas mika transparan hampers berisi Good Time, Teh Botol, & hiasan slayer natal/acara.', price: 'Rp 120.000', img: 'parcel-3.jpg' },
+            { id: 16, category: 'parcel', type: 'Beli', title: 'Parcel Premium Golden Ribbon', desc: 'Hampers keranjang rotan isi Pocky, Soya, Kukis Monde, dan aksesoris ronce emas.', price: 'Rp 220.000', img: 'parcel-4.jpg' },
+            { id: 17, category: 'parcel', type: 'Beli', title: 'Hampers Box Hari Raya Classic', desc: 'Box spesial Idul Fitri berisi Biskuit Monde, Good Time, Pocky, & Mie Sedaap Tasty.', price: 'Rp 160.000', img: 'parcel-5.jpg' },
+
+            // SOUVENIR
+            { id: 18, category: 'souvenir', type: 'Beli (Min 30pcs)', title: 'Souvenir Bubble Candle Cream Ribbon', desc: 'Lilin aromaterapi bentuk bubble dalam wadah kertas custom nama & tanggal + pita satin cream.', price: 'Rp 12.000 / pcs', img: 'souvenir-1.jpg' },
+            { id: 19, category: 'souvenir', type: 'Beli (Min 30pcs)', title: 'Souvenir Bubble Candle Sage Green', desc: 'Lilin bubble hijau sage elegan dengan hiasan bunga kering & custom kemasan nama.', price: 'Rp 12.500 / pcs', img: 'souvenir-2.jpg' },
+            { id: 20, category: 'souvenir', type: 'Beli (Min 50pcs)', title: 'Souvenir Scented Tealight Pink', desc: 'Lilin wangi mini dalam kemasan kartu ucapan "Thank You" kustom nama & tanggal.', price: 'Rp 7.500 / pcs', img: 'souvenir-3.jpg' }
+        ];
+
+        function formatPhone(num) {
+            let cleaned = num.replace(/\D/g, '');
+            if (cleaned.startsWith('0')) {
+                cleaned = '62' + cleaned.substring(1);
+            }
+            return cleaned;
+        }
+
+        function saveAdminNumber() {
+            const inputVal = document.getElementById('adminWaInput').value;
+            if(!inputVal) {
+                alert('Masukkan nomor WhatsApp yang valid!');
+                return;
+            }
+            currentPhoneNumber = formatPhone(inputVal);
+            document.getElementById('waStatus').innerText = `✓ Nomor WhatsApp berhasil dihubungkan ke: +${currentPhoneNumber}`;
+            renderProducts(productsData);
+            updateHeaderWa();
+        }
+
+        function updateHeaderWa() {
+            const btn = document.getElementById('headerWaBtn');
+            const msg = encodeURIComponent("Halo Soraya Atelier, saya mau bertanya mengenai katalog produk...");
+            btn.href = `https://wa.me/${currentPhoneNumber}?text=${msg}`;
+        }
+
+        function renderProducts(items) {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = items.map(p => {
+                const message = encodeURIComponent(`Halo Soraya Atelier, saya tertarik dan ingin memesan produk:\n\n*${p.title}* (${p.type})\nHarga: ${p.price}\n\nMohon informasi ketersediaannya ya, terima kasih!`);
+                const waUrl = `https://wa.me/${currentPhoneNumber}?text=${message}`;
+
+                return `
+                    <div class="product-card">
+                        <div class="card-img-box">
+                            <span class="badge-type ${p.category === 'akrilik' ? 'sewa' : 'beli'}">${p.type}</span>
+                            <img src="${p.img}" alt="${p.title}">
+                        </div>
+                        <div class="card-body">
+                            <h3 class="product-title">${p.title}</h3>
+                            <p class="product-desc">${p.desc}</p>
+                            <div class="card-footer-action">
+                                <span class="price-text">${p.price}</span>
+                                <a href="${waUrl}" target="_blank" class="btn-order-wa">
+                                    <i class="fa-brands fa-whatsapp"></i> Pesan
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function filterProducts(cat) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            if(event && event.target && event.target.classList) {
+                event.target.classList.add('active');
+            }
+            if(cat === 'all') {
+                renderProducts(productsData);
+            } else {
+                renderProducts(productsData.filter(p => p.category === cat));
+            }
+        }
+
+        updateHeaderWa();
+        renderProducts(productsData);
+    </script>
+</body>
+</html>
